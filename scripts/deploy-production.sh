@@ -53,7 +53,13 @@ php7.4 ./vendor/bin/dep deploy-bucket production \
 -o write_use_sudo=$WRITE_USE_SUDO
 
 # Run pre-release script in order to setup the server before magento deploy
-if [ -d "$PROJECT_PATH/magento" ]
+MAGENTO_PATH="$PROJECT_PATH"
+
+if [ -d "$PROJECT_PATH$MAGENTO_ROOT" ]
+then
+    MAGENTO_PATH="$PROJECT_PATH$MAGENTO_ROOT"
+
+if [ -d "$MAGENTO_PATH" ]
 then
   ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  production "cd $HOST_DEPLOY_PATH/release/magento/ && /bin/bash $HOST_DEPLOY_PATH/deployer/scripts/production/release_setup.sh"
 fi
@@ -76,7 +82,7 @@ php7.4 ./vendor/bin/dep $DEFAULT_DEPLOYER production \
 
 echo "running magento and/or pwa deployer"
 
-if [ -d "$PROJECT_PATH/magento" ]
+if [ -d "$MAGENTO_PATH" ]
 then
   ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  production "cd $HOST_DEPLOY_PATH/current/magento/ && /bin/bash $HOST_DEPLOY_PATH/deployer/scripts/production/post_release_setup.sh"
 fi

@@ -5,11 +5,18 @@ echo "building ....."
 chown -R root:root .
 PROJECT_PATH="$(pwd)"
 
-echo "currently in $PROJECT_PATH"
+MAGENTO_PATH="$PROJECT_PATH"
 
-if [ -d "$PROJECT_PATH/magento" ]
+if [ -d "$PROJECT_PATH$MAGENTO_ROOT" ]
 then
-   cd "$PROJECT_PATH/magento"
+    MAGENTO_PATH="$PROJECT_PATH$MAGENTO_ROOT"
+fi
+
+echo "currently in $MAGENTO_PATH"
+
+if [ -d "$MAGENTO_PATH" ]
+then
+   cd "$MAGENTO_PATH"
 
    /usr/local/bin/composer install --dry-run --no-dev --no-progress &> /dev/null
 
