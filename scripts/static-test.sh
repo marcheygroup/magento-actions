@@ -4,7 +4,14 @@ PROJECT_PATH="$(pwd)"
 
 echo "currently in $PROJECT_PATH"
 
-cd "$PROJECT_PATH/magento"
+MAGENTO_PATH="$PROJECT_PATH"
+
+if [ -d "$PROJECT_PATH$MAGENTO_ROOT" ]
+then
+    MAGENTO_PATH="$PROJECT_PATH$MAGENTO_ROOT"
+fi
+
+cd "$MAGENTO_PATH"
 
 /usr/local/bin/composer install --dry-run --prefer-dist --no-progress &> /dev/null
 
@@ -45,8 +52,8 @@ source /etc/environment
 # copy allure config if m2 >= 2.4.6
 if [ "$INPUT_OPENSEARCH" = "1" ]
 then
-  echo "copying allure config from $PROJECT_PATH/magento/dev/tests/static/allure/"
-  ALLURE_PATH="$PROJECT_PATH/magento/dev/tests/static/allure"
+  echo "copying allure config from $MAGENTO_PATH/dev/tests/static/allure/"
+  ALLURE_PATH="$MAGENTO_PATH/dev/tests/static/allure"
   cp -r $ALLURE_PATH .
 fi
 

@@ -4,7 +4,14 @@ PROJECT_PATH="$(pwd)"
 
 echo "currently in $PROJECT_PATH"
 
-cd "$PROJECT_PATH/magento"
+MAGENTO_PATH="$PROJECT_PATH"
+
+if [ -d "$PROJECT_PATH$MAGENTO_ROOT" ]
+then
+    MAGENTO_PATH="$PROJECT_PATH$MAGENTO_ROOT"
+fi
+
+cd "$MAGENTO_PATH"
 
 
 /usr/local/bin/composer install --dry-run --prefer-dist --no-progress &> /dev/null

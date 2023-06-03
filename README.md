@@ -58,9 +58,10 @@ Config sample when using magento v2.4.X
      - uses: actions/checkout@v3
      - name: 'this step will build an magento artifact'
        if: always()
-       uses: MAD-I-T/magento-actions@v3.21
+       uses: marchey/magento-actions@v3.21
        env:
          COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+         MAGENTO_PATH: '/magento'  # if your magento is not at root of the github repository
        with:
          process: 'build'
  ```
@@ -88,14 +89,14 @@ jobs:
     - uses: actions/checkout@v2  
     - name: 'this step will build an magento artifact'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.19
+      uses: marchey/magento-actions@v3.19
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         process: 'build'
 ```
 
-To use the latest experimental version of the module set the following : (`uses: MAD-I-T/magento-actions@master`)
+To use the latest experimental version of the module set the following : (`uses: marchey/magento-actions@master`)
 
 If some issues are encountered on 2.3.X version, please use the **v2.0** of the action in place of **v3.21** 
 
@@ -106,7 +107,7 @@ This can be done by adding php input (after **with:** option).
 - `php:` [Optional] possible values (7.1, 7.2, 7.3, 7.4, 8.1)
 - `composer_version:` [Optional] possible values (1, 2)
 - `process:` option [possible values](#other-processes) ('security-scan-files','static-test', 'integration-test', 'build'...)
-- see all available args in the inputs section in [actions.yml](https://github.com/MAD-I-T/magento-actions/blob/master/action.yml) 
+- see all available args in the inputs section in [actions.yml](https://github.com/marchey/magento-actions/blob/master/action.yml) 
 
 To use opensearch in place of elasticsearch [see following](https://forum.madit.fr/t/use-magento-actions-with-opensearch/63).
 
@@ -148,7 +149,7 @@ For magento 2.4 & 2.3
 
 ```
 - name: 'this step will deploy your build to deployment server - zero downtime'
-  uses: MAD-I-T/magento-actions@v3.21
+  uses: marchey/magento-actions@v3.21
   env:
     COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
     BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
@@ -165,7 +166,7 @@ For magento 2.4 & 2.3
 
 - name: 'unlock php deployer if the deployment fails'
   if: failure() || cancelled()
-  uses: MAD-I-T/magento-actions@v3.21
+  uses: marchey/magento-actions@v3.21
   env:
     COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
     BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
@@ -185,7 +186,7 @@ Also to keep X number of build artifacts on the server after consecutive deploym
 For magento 2.3 and lower if  issues with the preceding sample
 ```
 - name: 'this step will deploy your build to deployment server - zero downtime'
-  uses: MAD-I-T/magento-actions@v2.0
+  uses: marchey/magento-actions@v2.0
   env:
     COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
     BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
@@ -202,7 +203,7 @@ For magento 2.3 and lower if  issues with the preceding sample
 
 - name: 'unlock php deployer if the deployment fails'
   if: failure() || cancelled()
-  uses: MAD-I-T/magento-actions@v2.0
+  uses: marchey/magento-actions@v2.0
   env:
     COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
     BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
@@ -223,7 +224,7 @@ For magento 2.3 and lower if  issues with the preceding sample
 - `HOST_DEPLOY_PATH`: `/var/www/myeshop/`
 - `HOST_DEPLOY_PATH_BUCKET` : `${{secrets.STAGE_HOST_DEPLOY_PATH}}/bucket` or `/var/www/myeshop/bucket/`
 - `SSH_PRIVATE_KEY` : `your ssh key`
-- `SSH_CONFIG` : [see more](https://github.com/MAD-I-T/magento-actions/blob/master/config/php-deployer/sshd_config_example)  adjust the values to match your server (Host must be staging or production)
+- `SSH_CONFIG` : [see more](https://github.com/marchey/magento-actions/blob/master/config/php-deployer/sshd_config_example)  adjust the values to match your server (Host must be staging or production)
      ```
        Host staging  //this must be staging or production
         User magento 
@@ -261,7 +262,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: 'install fresh magento and copy to repo'
-      uses: MAD-I-T/magento-actions@v3.21
+      uses: marchey/magento-actions@v3.21
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -288,7 +289,7 @@ See [this repository](https://github.com/seyuf/mage-os-actions.git).
 ```
     - name: 'install fresh magento from mage-os'
       #if: ${{false}}
-      uses: MAD-I-T/magento-actions@v3.21
+      uses: marchey/magento-actions@v3.21
       with:
         process: 'install-mage-os'
         magento_version: 2.4.5  #e.g: 2.4.0, 2.4.3, 2.4.4 nightly
@@ -309,7 +310,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: 'install fresh  pwa studio code and copy to repo'
-      uses: MAD-I-T/magento-actions@v3.21
+      uses: marchey/magento-actions@v3.21
       with:
         process: 'pwa-studio-install'
         #no_push: 1 //uncomment this to prevent files from getting pushed to repo
@@ -318,7 +319,7 @@ jobs:
 One can also **install and deploy** a standalone PWA-studio website see the video below:
 ```
       - name: 'install fresh pwa-studio project'
-        uses: MAD-I-T/magento-actions@v3.12
+        uses: marchey/magento-actions@v3.12
         if: ${{false}}
         with:
           process: 'pwa-studio-install'
@@ -327,7 +328,7 @@ One can also **install and deploy** a standalone PWA-studio website see the vide
         if: ${{false}}
         #if: always()
         id: build
-        uses: MAD-I-T/magento-actions@v3.21
+        uses: marchey/magento-actions@v3.21
         env:
           COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         with:
@@ -335,7 +336,7 @@ One can also **install and deploy** a standalone PWA-studio website see the vide
       - name: 'launch magento2 zero downtime deploy'
         if: ${{false}}
         #if: always()
-        uses: MAD-I-T/magento-actions@v3.21
+        uses: marchey/magento-actions@v3.21
         env:
           BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
           HOST_DEPLOY_PATH: ${{secrets.STAGE_HOST_DEPLOY_PATH}}
@@ -350,7 +351,7 @@ One can also **install and deploy** a standalone PWA-studio website see the vide
       - name: 'unlock deployer if failure'
         if: ${{false}}
         #if: failure()
-        uses: MAD-I-T/magento-actions@v3.21
+        uses: marchey/magento-actions@v3.21
         env:
           BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
           HOST_DEPLOY_PATH: ${{secrets.STAGE_HOST_DEPLOY_PATH}}
@@ -378,7 +379,7 @@ For magento 2.4 and 2.3
 
 ```
 - name: 'test some specific module code quality'
-  uses: MAD-I-T/magento-actions@v3.21
+  uses: marchey/magento-actions@v3.21
   env:
     COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
   with:
@@ -398,7 +399,7 @@ For magento 2.4.x (**remove elasticsearch: 1 when building with 2.3.X**)
 
 ```
 - name: 'This step will build an magento artifact'
-  uses: MAD-I-T/magento-actions@v3.21
+  uses: marchey/magento-actions@v3.21
   env:
     COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
   with:
@@ -409,7 +410,7 @@ For magento <= 2.3  ***if issues with preceding sample***
 
 ```
 - name: 'This step will build an magento artifact'
-  uses: MAD-I-T/magento-actions@v2.0
+  uses: marchey/magento-actions@v2.0
   env:
     COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
   with:
@@ -434,7 +435,7 @@ For magento 2.4.x
 ```
 - name: 'This step will scan the files for security breach'
   if: always()
-  uses: MAD-I-T/magento-actions@v3.21
+  uses: marchey/magento-actions@v3.21
   env:
     COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
   with:
@@ -446,7 +447,7 @@ For magento 2.3 or lower
 ```
 - name: 'This step will scan the files for security breach'
   if: always()
-  uses: MAD-I-T/magento-actions@v2.0
+  uses: marchey/magento-actions@v2.0
   env:
     COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
   with:
@@ -461,7 +462,7 @@ For magento 2.4.x
 ```
 - name: 'This step will check all modules for security vulnerabilities'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.21
+      uses: marchey/magento-actions@v3.21
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -473,7 +474,7 @@ For magento 2.3 or lower
 ```
 - name: 'This step will check all modules for security vulnerabilities'
       if: always()
-      uses: MAD-I-T/magento-actions@v2.0
+      uses: marchey/magento-actions@v2.0
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -498,7 +499,7 @@ See code sample to unit test your custom or a thrid party magento2 module [here]
 For magento 2.4.x  
 ```
 - name: 'This step will execute all the unit tests available'
-  uses: MAD-I-T/magento-actions@v3.21
+  uses: marchey/magento-actions@v3.21
   env:
     COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
   with:
@@ -508,7 +509,7 @@ For magento 2.4.x
 Run all unit test of the magento email module
 ```
 - name: 'This step will execute specific unit tests in the path dir'
-  uses: MAD-I-T/magento-actions@v3.21
+  uses: marchey/magento-actions@v3.21
   env:
     COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
   with:
@@ -526,7 +527,7 @@ Run all unit test of the magento email module
 For magento 2.3 or lower if issues with the preceding sample
 ```
 - name: 'This step will execute all the unit tests available'
-  uses: MAD-I-T/magento-actions@v2.0
+  uses: marchey/magento-actions@v2.0
   env:
     COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
   with:
@@ -560,7 +561,7 @@ services:
       - 9200:9200
     options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
   #opensearch:
-  #   image: ghcr.io/mad-i-t/magento-opensearch:2.5.0
+  #   image: ghcr.io/marchey/magento-opensearch:2.5.0
   #   ports:
   #     - 9200:9200
   #   options: -e="discovery.type=single-node" -e "plugins.security.disabled=true" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
@@ -577,7 +578,7 @@ steps:
   - uses: actions/checkout@v3
   - name: 'launch magento2 integration test'
     if: ${{false}}
-    uses: MAD-I-T/magento-actions@v3.21
+    uses: marchey/magento-actions@v3.21
     env:
       COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
     with:
@@ -596,7 +597,7 @@ This feature utilizes the popular [bitExpert/phpstan-magento](https://github.com
 
 ```
   - name: 'phpstan analyzer'
-    uses: MAD-I-T/magento-actions@v3.21
+    uses: marchey/magento-actions@v3.21
     with:
       process: 'phpstan'
       exec_path: 'vendor/magento/module-email/' # i.e when standalone third party module github repo ../Madit/Module
@@ -614,7 +615,7 @@ Mess detection on magento2 using github actions.
 
 ```
   - name: 'mess detector'
-    uses: MAD-I-T/magento-actions@v3.21
+    uses: marchey/magento-actions@v3.21
     with:
       process: 'mess-detector'
       md_src_path: 'app/code/Madit/Sips2/'
@@ -629,7 +630,7 @@ Also see standalone third party module use case [here](https://github.com/MAD-I-
 For magento 2.3 & 2.4 
 ```
 - name: 'This step starts static testing the code'
-  uses: MAD-I-T/magento-actions@v3.21
+  uses: marchey/magento-actions@v3.21
   env:
     COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
   with:
@@ -642,7 +643,7 @@ For magento 2.3 & 2.4
 ### To make all docker build on the runner (no usage of an external image)  
  For those cloning ...
  
- Replace in [action.yml](https://github.com/MAD-I-T/magento-actions/blob/2e31f0c3a49314070f808458a93fa325e4855ffa/action.yml#L25)
+ Replace in [action.yml](https://github.com/MAD-I-T/magento-actions/blob/main/action.yml#L25)
  
  ` image: 'docker://mad1t/magento-actions:latest'` 
    
@@ -651,7 +652,7 @@ For magento 2.3 & 2.4
  ` image: 'Dockerfile'` 
  
  ### To override the files in default scripts and config directories without forking
-  use the [override_settings](https://github.com/MAD-I-T/magento-actions/blob/2e31f0c3a49314070f808458a93fa325e4855ffa/action.yml#L11) set it to 1
+  use the [override_settings](https://github.com/MAD-I-T/magento-actions/blob/main/action.yml#L11) set it to 1
   You'll also have to create scripts or config dirs in the root of your m2 project.
   [Example](https://github.com/seyuf/m2-dev-github-actions) of project scafolding to override the action's default configs
   ```bash
