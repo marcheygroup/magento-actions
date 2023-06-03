@@ -21,6 +21,6 @@ jobs:
 
     - name: Building magento-actions docker image
       run: |
-        docker build .  --tag ghcr.io/mad-i-t/magento-actions:3.22 --tag ghcr.io/mad-i-t/magento-actions:latest
-        docker push ghcr.io/mad-i-t/magento-actions:3.22
-        docker push ghcr.io/mad-i-t/magento-actions:latest
+        docker build .  --tag ghcr.io/marcheygroup/magento-actions:3.22 --tag ghcr.io/marcheygroup/magento-actions:latest
+        docker push ghcr.io/marcheygroup/magento-actions:3.22
+        docker push ghcr.io/marcheygroup/magento-actions:latest
