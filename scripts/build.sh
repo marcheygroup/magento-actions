@@ -39,7 +39,7 @@ then
 
     #mysqladmin -h mysql -u root -pmagento status
     ## fix magento error: connection default is not defined
-    #echo "<?php  return ['db' => [ 'table_prefix' => '', 'connection' => [ 'default' => [ 'host' => 'mysql', 'dbname' => 'magento', 'username' => 'root', 'password' => 'magento', 'model' => 'mysql4', 'engine' => 'innodb', 'initStatements' => 'SET NAMES utf8;', 'active' => '1' ] ]]];" > app/etc/env.php
+    echo "<?php  return ['db' => [ 'table_prefix' => '', 'connection' => [ 'default' => [ 'host' => 'mysql', 'dbname' => 'magento', 'username' => 'root', 'password' => 'magento', 'model' => 'mysql4', 'engine' => 'innodb', 'initStatements' => 'SET NAMES utf8;', 'active' => '1' ] ]]];" > app/etc/env.php
     ## end fix ##
 
     if [ -n "$INPUT_DISABLE_MODULES"  ]
@@ -48,6 +48,8 @@ then
       [ -f app/etc/config.php ] && cp app/etc/config.php app/etc/config.php.orig
     fi
 
+    cat app/etc/config.php
+    
     bash /opt/config/utils/pagebuilder-compatibility-checker.sh
     bash /opt/config/utils/common-magento-installer.sh
 
