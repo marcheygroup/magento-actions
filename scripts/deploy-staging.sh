@@ -48,12 +48,15 @@ php7.4 ./vendor/bin/dep deploy-bucket staging \
 -o deploy_keep_releases=$INPUT_KEEP_RELEASES \
 -o write_use_sudo=$WRITE_USE_SUDO
 
+echo '------> Deploying bucket complete ...';
+
 # Run pre-release script in order to setup the server before magento deploy
 MAGENTO_PATH="$PROJECT_PATH"
 
 if [ -d "$PROJECT_PATH$MAGENTO_ROOT" ]
 then
     MAGENTO_PATH="$PROJECT_PATH$MAGENTO_ROOT"
+fi
 
 if [ -d "$MAGENTO_PATH" ]
 then

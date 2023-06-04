@@ -2,6 +2,6 @@
   "name": "magento/php-deployer",
   "type": "project",
   "require": {
-    "deployer/deployer": "7.0.0"
+    "deployer/deployer": "7.3.1"
   }
 }
