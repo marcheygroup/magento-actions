@@ -1,18 +1,26 @@
 #!/usr/bin/env bash
+PROJECT_PATH="$(pwd)"
+
+MAGENTO_PATH="$PROJECT_PATH"
+
+if [ -d "$PROJECT_PATH$MAGENTO_ROOT" ]
+then
+    MAGENTO_PATH="$PROJECT_PATH$MAGENTO_ROOT"
+fi
 
 
-MAGE_VERSION=$(grep -ni '"version"' magento/composer.json | grep -o -E '\:\ .+' | cut -d' ' -f6 | cut -d',' -f1 | cut -d'"' -f2;);
+MAGE_VERSION=$(grep -ni '"version"' $MAGENTO_PATH/composer.json | grep -o -E '\:\ .+' | cut -d' ' -f6 | cut -d',' -f1 | cut -d'"' -f2;);
 
 
 if [ -z "$MAGE_VERSION" ]
 then
-  MAGE_VERSION=$(grep -ni '"version"' ./magento/composer.json | grep -o -E '\:\ .+' | cut -d ' ' -f4 | cut -d',' -f1 | cut -d'"' -f2;);
+  MAGE_VERSION=$(grep -ni '"version"' $MAGENTO_PATH/composer.json | grep -o -E '\:\ .+' | cut -d ' ' -f4 | cut -d',' -f1 | cut -d'"' -f2;);
 fi
 
 set -e
 echo "Current magento version is $MAGE_VERSION"
 pwd
-ls -lath magento/composer.json
+ls -lath $MAGENTO_PATH/composer.json
 
 
 majorVersion=${MAGE_VERSION:2:1}
