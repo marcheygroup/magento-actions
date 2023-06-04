@@ -47,8 +47,6 @@ then
       echo "These modules will be discarded during install process $INPUT_DISABLE_MODULES"
       [ -f app/etc/config.php ] && cp app/etc/config.php app/etc/config.php.orig
     fi
-
-    cat app/etc/config.php
     
     bash /opt/config/utils/pagebuilder-compatibility-checker.sh
     bash /opt/config/utils/common-magento-installer.sh
