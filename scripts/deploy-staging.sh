@@ -16,7 +16,6 @@ echo "Create artifact and send to server"
 
 cd $PROJECT_PATH
 
-
 echo "Deploying to staging server";
 
 mkdir -p deployer/scripts/
@@ -26,6 +25,11 @@ echo 'creating bucket dir'
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  staging "mkdir -p $HOST_DEPLOY_PATH_BUCKET"
 
 ARCHIVES="deployer/scripts/staging"
+
+ls deployer/scripts/staging
+ls deployer/scripts/staging/magento
+ls deployer/scripts/staging/magento/generated
+ls deployer/scripts/staging/magento/vendor
 
 [ -d "pwa-studio" ] && ARCHIVES="$ARCHIVES pwa-studio"
 [ -d "magento" ] && ARCHIVES="$ARCHIVES magento"
