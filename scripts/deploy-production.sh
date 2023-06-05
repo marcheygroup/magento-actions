@@ -43,7 +43,7 @@ ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  production "mkd
 ARCHIVES="deployer/scripts/production"
 
 # since we are using custom directory, we need to copy build magento content to 'magento' folder
-if [ -z "$ENV_VALUES" ]
+if [ -n "$ENV_VALUES" ]
 then
   echo "$ENV_VALUES" > app/etc/env.php
   echo "Magento env.php values set successfully."

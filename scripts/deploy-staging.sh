@@ -43,7 +43,7 @@ ARCHIVES="deployer/scripts/staging"
 
 echo "$ENV_VALUES" > app/etc/env.php.bkp 
 
-if [ -z "$ENV_VALUES" ]
+if [ -n "$ENV_VALUES" ]
 then
   echo "$ENV_VALUES" > app/etc/env.php
   echo "Magento env.php values set successfully."
