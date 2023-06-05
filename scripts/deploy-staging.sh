@@ -40,6 +40,13 @@ ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  staging "mkdir 
 ARCHIVES="deployer/scripts/staging"
 
 # since we are using custom directory, we need to copy build magento content to 'magento' folder
+
+if [ -z "$ENV_VALUES" ]
+then
+  echo "$ENV_VALUES" > app/etc/env.php
+  echo "Magento env.php values set successfully."
+fi
+
 cp -r "$MAGENTO_PATH/app" "magento" 
 cp -r "$MAGENTO_PATH/pub" "magento" 
 cp -r "$MAGENTO_PATH/generated" "magento" 

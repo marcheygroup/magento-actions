@@ -2,12 +2,6 @@
 
 echo "post release script"
 
-if [ -n $ENV_VALUES ]
-then
-  echo "$ENV_VALUES" > app/etc/env.php
-  echo "Magento env.php values set successfully."
-fi
-
 if [ ! -s app/etc/env.php ]
 then
   echo "This is the first deploy? You must set magento env.php"
