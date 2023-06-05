@@ -39,21 +39,17 @@ ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  staging "mkdir 
 
 ARCHIVES="deployer/scripts/staging"
 
-echo 'printing bucket dir'
-ls deployer/scripts/staging
-echo 'printing magento'
-ls magento
-echo 'printing magento/generated'
-ls magento/generated
-echo 'printing magento/vendor'
-ls magento/vendor
-echo 'printing ./vendor'
-ls ./vendor
-echo 'printing ./generated'
-ls ./generated
+# since we are using custom directory, we need to copy build magento content to 'magento' folder
+cp -r "$MAGENTO_PATH/app" "magento" 
+cp -r "$MAGENTO_PATH/pub" "magento" 
+cp -r "$MAGENTO_PATH/generated" "magento" 
+cp -r "$MAGENTO_PATH/vendor" "magento" 
+cp -r "$MAGENTO_PATH/var" "magento" 
 
-[ -d "$PWA_PATH" ] && ARCHIVES="$ARCHIVES $PWA_PATH"
-[ -d "$MAGENTO_PATH" ] && ARCHIVES="$ARCHIVES $MAGENTO_PATH"
+[ -d "$PWA_PATH" ] && cp -a "$PWA_PATH/." "pwa-studio" 
+
+[ -d "pwa-studio" ] && ARCHIVES="$ARCHIVES pwa-studio"
+[ -d "magento" ] && ARCHIVES="$ARCHIVES magento"
 
 
 tar cfz "$BUCKET_COMMIT" $ARCHIVES
