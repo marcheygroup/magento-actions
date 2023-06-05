@@ -3,9 +3,9 @@ PROJECT_PATH="$(pwd)"
 
 MAGENTO_PATH="$PROJECT_PATH"
 
-if [ -d "$PROJECT_PATH$MAGENTO_ROOT" ]
+if [ -d "$PROJECT_PATH$INPUT_MAGENTO_PATH" ]
 then
-    MAGENTO_PATH="$PROJECT_PATH$MAGENTO_ROOT"
+    MAGENTO_PATH="$PROJECT_PATH$INPUT_MAGENTO_PATH"
 fi
 
 MAGE_VERSION=$(grep -ni '"version"' $MAGENTO_PATH/composer.json | grep -o -E '\:\ .+' | cut -d' ' -f6 | cut -d',' -f1 | cut -d'"' -f2;);

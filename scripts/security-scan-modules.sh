@@ -10,9 +10,9 @@ git clone https://github.com/gwillem/magevulndb.git
 
 MAGENTO_PATH="$PROJECT_PATH"
 
-if [ -d "$PROJECT_PATH$MAGENTO_ROOT" ]
+if [ -d "$PROJECT_PATH$INPUT_MAGENTO_PATH" ]
 then
-    MAGENTO_PATH="$PROJECT_PATH$MAGENTO_ROOT"
+    MAGENTO_PATH="$PROJECT_PATH$INPUT_MAGENTO_PATH"
 fi
 
 cd $MAGENTO_PATH

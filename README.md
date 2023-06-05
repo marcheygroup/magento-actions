@@ -61,9 +61,11 @@ Config sample when using magento v2.4.X
        uses: marchey/magento-actions@v3.21
        env:
          COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
-         MAGENTO_PATH: '/magento'  # if your magento is not at root of the github repository
        with:
          process: 'build'
+         magento_path: '/magento'  # if your magento is not at root of the github repository
+         pwa_path: '/pwa'  # pwa code folder
+         env_values:
  ```
 
  Config Example when under magento 2.3 & lower
@@ -94,6 +96,8 @@ jobs:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         process: 'build'
+        magento_path: '/magento'  # if your magento is not at root of the github repository
+        pwa_path: '/pwa'  # pwa code folder
 ```
 
 To use the latest experimental version of the module set the following : (`uses: marchey/magento-actions@master`)
@@ -160,9 +164,12 @@ For magento 2.4 & 2.3
     SSH_PRIVATE_KEY: ${{secrets.STAGE_SSH_PRIVATE_KEY}}
     SSH_CONFIG: ${{secrets.STAGE_SSH_CONFIG}}
     WRITE_USE_SUDO: false
+    ENV_VALUES: ${{secrets.STAGE_ENV_VALUES}} # env.php values for stage. i.e. <?php ... ?>
     with:
       process: 'deploy-staging'
       deployer: 'no-permission-check'
+      magento_path: '/magento'  # if your magento is not at root of the github repository
+      pwa_path: '/pwa'  # pwa code folder
 
 - name: 'unlock php deployer if the deployment fails'
   if: failure() || cancelled()
@@ -180,6 +187,8 @@ For magento 2.4 & 2.3
   with:
     process: 'cleanup-staging'
     deployer: 'no-permission-check'
+    magento_path: '/magento'  # if your magento is not at root of the github repository
+    pwa_path: '/pwa'  # pwa code folder
 ```
 Also to keep X number of build artifacts on the server after consecutive deployments. One can use ```keep_releases``` [see here](https://forum.madit.fr/t/magento-actions-limit-the-number-of-kept-releases-on-the-server/60).
 
@@ -197,9 +206,12 @@ For magento 2.3 and lower if  issues with the preceding sample
     SSH_PRIVATE_KEY: ${{secrets.STAGE_SSH_PRIVATE_KEY}}
     SSH_CONFIG: ${{secrets.STAGE_SSH_CONFIG}}
     WRITE_USE_SUDO: false
+    ENV_VALUES: ${{secrets.STAGE_ENV_VALUES}} # env.php values for stage. i.e. <?php ... ?>
   with:
     php: '7.1'
     process: 'deploy-staging'
+    magento_path: '/magento'  # if your magento is not at root of the github repository
+    pwa_path: '/pwa'  # pwa code folder
 
 - name: 'unlock php deployer if the deployment fails'
   if: failure() || cancelled()
@@ -217,6 +229,8 @@ For magento 2.3 and lower if  issues with the preceding sample
   with:
     php: '7.1'
     process: 'cleanup-staging'
+    magento_path: '/magento'  # if your magento is not at root of the github repository
+    pwa_path: '/pwa'  # pwa code folder
 
 ```
 **The env section and values are mandatory** :
@@ -269,6 +283,8 @@ jobs:
         process: 'install-magento'
         magento_version: 2.3.0
 #       no_push: 1 //uncomment this to prevent files from getting pushed to repo
+        magento_path: '/magento'  # if your magento is not at root of the github repository
+        pwa_path: '/pwa'  # pwa code folder
 ```
 
 
@@ -314,6 +330,8 @@ jobs:
       with:
         process: 'pwa-studio-install'
         #no_push: 1 //uncomment this to prevent files from getting pushed to repo
+        magento_path: '/magento'  # if your magento is not at root of the github repository
+        pwa_path: '/pwa'  # pwa code folder
 ```
 ## Deploy pwa-studio action
 One can also **install and deploy** a standalone PWA-studio website see the video below:
@@ -344,10 +362,13 @@ One can also **install and deploy** a standalone PWA-studio website see the vide
           SSH_PRIVATE_KEY: ${{secrets.STAGE_SSH_PRIVATE_KEY}}
           SSH_CONFIG: ${{secrets.STAGE_SSH_CONFIG}}
           WRITE_USE_SUDO: false
+          ENV_VALUES: ${{secrets.STAGE_ENV_VALUES}} # env.php values for stage. i.e. <?php ... ?>
         with:
          deployer: 'no-permission-check'
          process: 'deploy-staging'
-        
+         magento_path: '/magento'  # if your magento is not at root of the github repository
+         pwa_path: '/pwa'  # pwa code folder
+
       - name: 'unlock deployer if failure'
         if: ${{false}}
         #if: failure()
@@ -361,6 +382,8 @@ One can also **install and deploy** a standalone PWA-studio website see the vide
           WRITE_USE_SUDO: false
         with:
           process: 'cleanup-staging'
+          magento_path: '/magento'  # if your magento is not at root of the github repository
+          pwa_path: '/pwa'  # pwa code folder
 ```
 <div align="center">
   <a href="https://www.youtube.com/watch?v=psEBF5lohLo"><img src="https://user-images.githubusercontent.com/3765910/196008518-dc4cafb9-ce59-44fb-8b2e-9348688cc932.png" alt="check code against magento coding standard using github actions"></a>

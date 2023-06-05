@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 
-# check and edit this path (public path of magento)
+echo "post release script"
+
+if [ -n $ENV_VALUES ]
+then
+  echo "$ENV_VALUES" > app/etc/env.php
+  echo "Magento env.php values set successfully."
+fi
 
 if [ ! -f app/etc/env.php ]
 then

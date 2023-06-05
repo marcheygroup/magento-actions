@@ -76,6 +76,12 @@ inputs:
     default: 16
   version:
    description: 'generic version to be compounded with other variables e.g pwa-studio-install to specify pwa version'
+  magento_path:
+    description: 'magento root path. default: "/magento"'
+    default: '/magento'
+  pwa_path:
+    description: 'pwa root path. default: "/pwa"'
+    default: '/pwa'
 
 
 

@@ -7,9 +7,9 @@ PROJECT_PATH="$(pwd)"
 
 MAGENTO_PATH="$PROJECT_PATH"
 
-if [ -d "$PROJECT_PATH$MAGENTO_ROOT" ]
+if [ -d "$PROJECT_PATH$INPUT_MAGENTO_PATH" ]
 then
-    MAGENTO_PATH="$PROJECT_PATH$MAGENTO_ROOT"
+    MAGENTO_PATH="$PROJECT_PATH$INPUT_MAGENTO_PATH"
 fi
 
 echo "currently in $MAGENTO_PATH"
@@ -90,7 +90,14 @@ fi
 cd $PROJECT_PATH
 
 #launch pwa-strudio build if the directory exists
-if [ -d "$PROJECT_PATH/pwa-studio" ]
+PWA_PATH=$PROJECT_PATH
+
+if [ -n $INPUT_PWA_PATH ]
+then
+  PWA_PATH="$PROJECT_PATH$INPUT_PWA_PATH"
+fi
+
+if [ -d "$PWA_PATH" ]
 then
   curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.39.1/install.sh | bash
   export NVM_DIR="$HOME/.nvm"
@@ -100,7 +107,7 @@ then
   yarn install && yarn add compression
   yarn add  @magento/pwa-buildpack
 
-  cd pwa-studio
+  cd $PWA_PATH
   yarn install --update-checksums --frozen-lockfile
   yarn run build
 
