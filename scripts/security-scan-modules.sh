@@ -15,6 +15,8 @@ then
     MAGENTO_PATH="$PROJECT_PATH$INPUT_MAGENTO_PATH"
 fi
 
+echo "MAGENTO_PATH set as $MAGENTO_PATH"
+
 cd $MAGENTO_PATH
 
 php /opt/magerun/n98-magerun2-latest.phar dev:module:security

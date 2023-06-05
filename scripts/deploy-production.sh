@@ -60,6 +60,8 @@ then
     MAGENTO_PATH="$PROJECT_PATH$INPUT_MAGENTO_PATH"
 fi
 
+echo "MAGENTO_PATH set as $MAGENTO_PATH"
+
 if [ -d "$MAGENTO_PATH" ]
 then
   ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  production "cd $HOST_DEPLOY_PATH/release/magento/ && /bin/bash $HOST_DEPLOY_PATH/deployer/scripts/production/release_setup.sh"

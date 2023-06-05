@@ -8,6 +8,8 @@ then
     MAGENTO_PATH="$PROJECT_PATH$INPUT_MAGENTO_PATH"
 fi
 
+echo "MAGENTO_PATH set as $MAGENTO_PATH"
+
 MAGE_VERSION=$(grep -ni '"version"' $MAGENTO_PATH/composer.json | grep -o -E '\:\ .+' | cut -d' ' -f6 | cut -d',' -f1 | cut -d'"' -f2;);
 
 

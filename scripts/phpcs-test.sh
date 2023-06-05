@@ -22,6 +22,8 @@ then
     MAGENTO_PATH="$PROJECT_PATH$INPUT_MAGENTO_PATH"
 fi
 
+echo "MAGENTO_PATH set as $MAGENTO_PATH"
+
 if [ -d "$MAGENTO_PATH/app/code/$INPUT_EXTENSION" ]
 then
 	echo "Extension $MAGENTO_PATH/app/code/$INPUT_EXTENSION exists."
