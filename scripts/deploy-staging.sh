@@ -27,17 +27,13 @@ ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  staging "mkdir 
 ARCHIVES="deployer/scripts/staging"
 
 echo 'printing bucket dir'
-echo $(ls deployer/scripts/staging)
+ls deployer/scripts/staging
 echo 'printing magento'
-echo $(ls magento)
+ls magento
 echo 'printing magento/generated'
-echo $(ls magento/generated)
+ls magento/generated
 echo 'printing magento/vendor'
-echo $(ls magento/vendor)
-echo 'printing deployer/scripts/staging/generated'
-echo $(ls deployer/scripts/staging/generated)
-echo 'printing deployer/scripts/staging/vendor'
-echo $(ls deployer/scripts/staging/vendor)
+ls magento/vendor
 
 [ -d "pwa-studio" ] && ARCHIVES="$ARCHIVES pwa-studio"
 [ -d "magento" ] && ARCHIVES="$ARCHIVES magento"
