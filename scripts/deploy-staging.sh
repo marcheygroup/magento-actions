@@ -44,6 +44,7 @@ ARCHIVES="deployer/scripts/staging"
 if [ -n "$ENV_VALUES" ]
 then
   echo "$ENV_VALUES" > $MAGENTO_PATH/app/etc/env.php
+  scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  $MAGENTO_PATH/app/etc/env.php staging:$HOST_DEPLOY_PATH/shared/magento/app/etc/
   echo "Magento env.php values set successfully."
 fi
 
