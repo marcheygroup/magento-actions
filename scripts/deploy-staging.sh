@@ -27,9 +27,9 @@ ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  staging "mkdir 
 ARCHIVES="deployer/scripts/staging"
 
 ls deployer/scripts/staging
-ls deployer/scripts/staging/magento
-ls deployer/scripts/staging/magento/generated
-ls deployer/scripts/staging/magento/vendor
+ls magento
+ls magento/generated
+ls magento/vendor
 
 [ -d "pwa-studio" ] && ARCHIVES="$ARCHIVES pwa-studio"
 [ -d "magento" ] && ARCHIVES="$ARCHIVES magento"
