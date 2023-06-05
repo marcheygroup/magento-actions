@@ -4,6 +4,18 @@ set -e
 
 PROJECT_PATH="$(pwd)"
 
+MAGENTO_PATH="$PROJECT_PATH"
+
+if [ -d "$PROJECT_PATH$INPUT_MAGENTO_PATH" ]
+then
+    MAGENTO_PATH="$PROJECT_PATH$INPUT_MAGENTO_PATH"
+fi
+
+PWA_PATH="$PROJECT_PATH/pwa"
+if [ -n $INPUT_PWA_PATH ]
+then
+  PWA_PATH="$PROJECT_PATH$INPUT_PWA_PATH"
+fi
 
 echo "project path is $PROJECT_PATH";
 
@@ -30,8 +42,9 @@ ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  production "mkd
 
 ARCHIVES="deployer/scripts/production"
 
-[ -d "pwa-studio" ] && ARCHIVES="$ARCHIVES pwa-studio"
-[ -d "magento" ] && ARCHIVES="$ARCHIVES magento"
+
+[ -d "$PWA_PATH" ] && ARCHIVES="$ARCHIVES $PWA_PATH"
+[ -d "$MAGENTO_PATH" ] && ARCHIVES="$ARCHIVES $MAGENTO_PATH"
 
 
 tar cfz "$BUCKET_COMMIT" $ARCHIVES

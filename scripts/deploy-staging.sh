@@ -4,6 +4,19 @@ set -e
 
 PROJECT_PATH="$(pwd)"
 
+MAGENTO_PATH="$PROJECT_PATH"
+
+if [ -d "$PROJECT_PATH$INPUT_MAGENTO_PATH" ]
+then
+    MAGENTO_PATH="$PROJECT_PATH$INPUT_MAGENTO_PATH"
+fi
+
+PWA_PATH="$PROJECT_PATH/pwa"
+if [ -n $INPUT_PWA_PATH ]
+then
+  PWA_PATH="$PROJECT_PATH$INPUT_PWA_PATH"
+fi
+
 echo "project path is $PROJECT_PATH";
 
 which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
@@ -34,9 +47,13 @@ echo 'printing magento/generated'
 ls magento/generated
 echo 'printing magento/vendor'
 ls magento/vendor
+echo 'printing ./vendor'
+ls ./vendor
+echo 'printing ./generated'
+ls ./generated
 
-[ -d "pwa-studio" ] && ARCHIVES="$ARCHIVES pwa-studio"
-[ -d "magento" ] && ARCHIVES="$ARCHIVES magento"
+[ -d "$PWA_PATH" ] && ARCHIVES="$ARCHIVES $PWA_PATH"
+[ -d "$MAGENTO_PATH" ] && ARCHIVES="$ARCHIVES $MAGENTO_PATH"
 
 
 tar cfz "$BUCKET_COMMIT" $ARCHIVES
@@ -59,13 +76,6 @@ php7.4 ./vendor/bin/dep deploy-bucket staging \
 echo '------> Deploying bucket complete ...';
 
 # Run pre-release script in order to setup the server before magento deploy
-MAGENTO_PATH="$PROJECT_PATH"
-
-if [ -d "$PROJECT_PATH$INPUT_MAGENTO_PATH" ]
-then
-    MAGENTO_PATH="$PROJECT_PATH$INPUT_MAGENTO_PATH"
-fi
-
 echo "MAGENTO_PATH set as $MAGENTO_PATH"
 
 if [ -d "$MAGENTO_PATH" ]
