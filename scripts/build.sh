@@ -92,7 +92,7 @@ cd $PROJECT_PATH
 #launch pwa-strudio build if the directory exists
 PWA_PATH="$PROJECT_PATH/pwa"
 
-if [ -n $INPUT_PWA_PATH && -d "$PWA_PATH" ]
+if [ -n "$INPUT_PWA_PATH" && -d "$PWA_PATH" ]
 then
   PWA_PATH="$PROJECT_PATH$INPUT_PWA_PATH"
 fi
@@ -105,7 +105,7 @@ then
   nvm install $INPUT_NODE_VERSION
   npm install --location=global yarn
   yarn install && yarn add compression
-  yarn add  @magento/pwa-buildpack
+  yarn add @magento/pwa-buildpack
 
   cd $PWA_PATH
   yarn install --update-checksums --frozen-lockfile
