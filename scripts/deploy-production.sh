@@ -49,10 +49,9 @@ then
   echo "Magento env.php values set successfully."
 fi
 cp -r "$MAGENTO_PATH/app" "magento" 
-cp -r "$MAGENTO_PATH/pub" "magento" 
+cp -r "$MAGENTO_PATH/pub/static" "magento/pub" 
 cp -r "$MAGENTO_PATH/generated" "magento" 
 cp -r "$MAGENTO_PATH/vendor" "magento" 
-cp -r "$MAGENTO_PATH/var" "magento" 
 
 [ -d "$PWA_PATH" ] && cp -a "$PWA_PATH/." "pwa-studio" 
 
