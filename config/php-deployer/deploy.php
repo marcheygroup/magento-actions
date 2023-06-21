@@ -31,7 +31,19 @@ set(
 );
 set(
     'shared_dirs', [
-        '{{magento_root}}/pub/media'
+        '{{magento_root}}/pub/media',
+        '{{magento_root}}/var/composer_home',
+        '{{magento_root}}/var/log',
+        '{{magento_root}}/var/export',
+        '{{magento_root}}/var/report',
+        '{{magento_root}}/var/import',
+        '{{magento_root}}/var/import_history',
+        '{{magento_root}}/var/session',
+        '{{magento_root}}/var/importexport',
+        '{{magento_root}}/var/backups',
+        '{{magento_root}}/var/tmp',
+        '{{magento_root}}/pub/sitemap',
+        '{{magento_root}}/pub/static/_cache'
     ]
 );
 set(
@@ -39,6 +51,8 @@ set(
         '{{magento_root}}/var',
         '{{magento_root}}/pub/static',
         '{{magento_root}}/pub/media',
+        '{{magento_root}}/generated',
+        '{{magento_root}}/var/page_cache'
     ]
 );
 
@@ -59,18 +73,17 @@ task(
         if (test('[ -d temp/magento ]')) {
             info('releasing magento');
             run('cp -rf temp/magento {{release_path}}');
-        }
-        else info('magento backend release skipped');
+        } else info('magento backend release skipped');
 
         if (test('[ -d temp/pwa-studio ]')) {
             info('releasing pwa-studio');
             run('cp -rf temp/pwa-studio {{release_path}}');
-        }else info('pwa-studio release skipped');
+        } else info('pwa-studio release skipped');
 
         if (test('[ -d temp/deployer ]')) {
             info('releasing deployer');
             run('cp -rf temp/deployer {{deploy_path}}');
-        }else info('deployer release skipped');
+        } else info('deployer release skipped');
 
         run('mv {{bucket-commit}} {{bucket-commit}}.back');
         run('rm temp -rf');
