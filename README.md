@@ -359,6 +359,7 @@ One can also **install and deploy** a standalone PWA-studio website see the vide
           BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
           HOST_DEPLOY_PATH: ${{secrets.STAGE_HOST_DEPLOY_PATH}}
           HOST_DEPLOY_PATH_BUCKET: ${{secrets.STAGE_HOST_DEPLOY_PATH}}/bucket
+          HOST_DEPLOY_PATH_RELEASES: ${{secrets.STAGE_HOST_DEPLOY_PATH}}/releases
           SSH_PRIVATE_KEY: ${{secrets.STAGE_SSH_PRIVATE_KEY}}
           SSH_CONFIG: ${{secrets.STAGE_SSH_CONFIG}}
           WRITE_USE_SUDO: false
