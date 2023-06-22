@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "post release script"
+# check and edit this path (public path of magento)
 
 if [ ! -f app/etc/env.php ]
 then
