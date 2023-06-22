@@ -92,7 +92,7 @@ cd $PROJECT_PATH
 #launch pwa-strudio build if the directory exists
 PWA_PATH="$PROJECT_PATH/pwa"
 
-if [ -n "$INPUT_PWA_PATH" && -d "$PWA_PATH" ]
+if [[ -n "$INPUT_PWA_PATH" && -d "$PROJECT_PATH$INPUT_PWA_PATH" ]]
 then
   PWA_PATH="$PROJECT_PATH$INPUT_PWA_PATH"
 fi

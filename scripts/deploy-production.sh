@@ -130,7 +130,7 @@ fi
 
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  production "cd $HOST_DEPLOY_PATH_BUCKET && /bin/bash $HOST_DEPLOY_PATH/deployer/scripts/production/post_release_cleanup.sh $INPUT_KEEP_RELEASES"
 
-if [-n $HOST_DEPLOY_PATH_RELEASES ]
+if [ -n "$HOST_DEPLOY_PATH_RELEASES" ]
 then
   echo "cleaning up releases"
   ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  production "cd $HOST_DEPLOY_PATH_RELEASES && /bin/bash $HOST_DEPLOY_PATH/deployer/scripts/staging/post_release_cleanup.sh $INPUT_KEEP_RELEASES"
