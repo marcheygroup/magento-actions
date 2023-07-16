@@ -10,3 +10,13 @@ KEEP_RELEASE_NR="NR>$1";
 
 
 rm -rf `ls -t | awk $KEEP_RELEASE_NR`
+
+if service --status-all | grep -Fq 'php8.1-fpm'; then    
+  sudo service php8.1-fpm restart    
+  echo "service php8.1-fpm restarted"
+fi
+
+if service --status-all | grep -Fq 'php8.2-fpm'; then    
+  sudo service php8.2-fpm restart    
+  echo "service php8.2-fpm restarted"
+fi
