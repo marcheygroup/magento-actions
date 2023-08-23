@@ -85,6 +85,9 @@ then
     fi
 
     rm app/etc/env.php
+
+    ls
+    ls magento
 fi
 
 cd $PROJECT_PATH
