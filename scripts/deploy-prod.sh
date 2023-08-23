@@ -30,16 +30,12 @@ ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  production "mkd
 
 ARCHIVES="deployer/scripts/production"
 
-# since we are using custom directory, we need to copy build magento content to 'magento' folder
 if [ -n "$ENV_VALUES" ]
 then
-  echo "$ENV_VALUES" > app/etc/env.php
+  echo "$ENV_VALUES" > magento/app/etc/env.php
+  scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  magento/app/etc/env.php staging:$HOST_DEPLOY_PATH/shared/magento/app/etc/
   echo "Magento env.php values set successfully."
 fi
-cp -r "$MAGENTO_PATH/app" "magento" 
-cp -r "$MAGENTO_PATH/pub/static" "magento/pub" 
-cp -r "$MAGENTO_PATH/generated" "magento" 
-cp -r "$MAGENTO_PATH/vendor" "magento" 
 
 [ -d "$PWA_PATH" ] && cp -a "$PWA_PATH/." "pwa-studio" 
 

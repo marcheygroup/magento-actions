@@ -85,9 +85,12 @@ then
     fi
 
     rm app/etc/env.php
-
-    ls
-    ls magento
+    
+    # since we are using custom directory, we need to copy build magento content to 'magento' folder
+    cp -r "$MAGENTO_PATH/app" "magento" 
+    cp -r "$MAGENTO_PATH/pub/static" "magento/pub" 
+    cp -r "$MAGENTO_PATH/generated" "magento" 
+    cp -r "$MAGENTO_PATH/vendor" "magento" 
 fi
 
 cd $PROJECT_PATH
