@@ -92,9 +92,6 @@ then
     cp -r "$MAGENTO_PATH/pub/static" "magento/pub" 
     cp -r "$MAGENTO_PATH/generated" "magento" 
     cp -r "$MAGENTO_PATH/vendor" "magento" 
-
-    echo "Tar artifact created: magento.tar"
-    tar -cvf magento.tar ./magento
 fi
 
 cd $PROJECT_PATH
