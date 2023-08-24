@@ -92,6 +92,11 @@ then
     cp -r "$MAGENTO_PATH/pub/static" "magento/pub" 
     cp -r "$MAGENTO_PATH/generated" "magento" 
     cp -r "$MAGENTO_PATH/vendor" "magento" 
+
+    echo "Cleanup non essential files"
+    rm -rf magento/dev/*
+    rm -rf magento/var/*
+
 fi
 
 cd $PROJECT_PATH
