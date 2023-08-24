@@ -9,8 +9,9 @@ MAGENTO_PATH="$PROJECT_PATH"
 if [ -d "$PROJECT_PATH$INPUT_MAGENTO_PATH" ]
 then
     MAGENTO_PATH="$PROJECT_PATH$INPUT_MAGENTO_PATH"
-    cp -a /magento/. "$MAGENTO_PATH" #TODO: fix MAGENTO_PATH resolution issue
 fi
+
+cp -a ./magento/. "$PROJECT_PATH" #TODO: fix MAGENTO_PATH resolution issue
 
 PWA_PATH="$PROJECT_PATH/pwa"
 if [ -n $INPUT_PWA_PATH ]
