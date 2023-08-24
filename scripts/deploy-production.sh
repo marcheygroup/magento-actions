@@ -9,6 +9,7 @@ MAGENTO_PATH="$PROJECT_PATH"
 if [ -d "$PROJECT_PATH$INPUT_MAGENTO_PATH" ]
 then
     MAGENTO_PATH="$PROJECT_PATH$INPUT_MAGENTO_PATH"
+    cp -a /magento/. "$MAGENTO_PATH" #TODO: fix MAGENTO_PATH resolution issue
 fi
 
 PWA_PATH="$PROJECT_PATH/pwa"
@@ -24,7 +25,6 @@ eval $(ssh-agent -s)
 mkdir ~/.ssh/ && echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
 ssh-add ~/.ssh/id_rsa
 echo "$SSH_CONFIG" > /etc/ssh/ssh_config && chmod 600 /etc/ssh/ssh_config
-
 
 
 echo "Create artifact and send to server"
@@ -96,8 +96,14 @@ then
   DEFAULT_DEPLOYER="deploy:no-permission-check"
 fi
 
+$DEFAULT_SELECTOR=production
+if [ -n "$SELECTOR" ]
+then
+  $DEFAULT_SELECTOR=$SELECTOR
+fi
+
 # deploy release
-php7.4 ./vendor/bin/dep $DEFAULT_DEPLOYER production \
+php7.4 ./vendor/bin/dep $DEFAULT_DEPLOYER $DEFAULT_SELECTOR \
 -o bucket-commit=$BUCKET_COMMIT \
 -o host_bucket_path=$HOST_DEPLOY_PATH_BUCKET \
 -o deploy_path_custom=$HOST_DEPLOY_PATH \
