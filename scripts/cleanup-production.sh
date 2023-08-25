@@ -2,7 +2,7 @@
 
 which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
 eval $(ssh-agent -s)
-mkdirv -p ~/.ssh/ && echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+mkdir -p ~/.ssh/ && echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
 ssh-add ~/.ssh/id_rsa
 echo "$SSH_CONFIG" > /etc/ssh/ssh_config && chmod 600 /etc/ssh/ssh_config
 
