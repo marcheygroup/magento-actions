@@ -11,7 +11,16 @@ then
     MAGENTO_PATH="$PROJECT_PATH$INPUT_MAGENTO_PATH"
 fi
 
-cp -a ./magento/. "$PROJECT_PATH" #TODO: fix MAGENTO_PATH resolution issue
+echo "ls $PROJECT_PATH/vendor/ \n"
+ls $PROJECT_PATH/vendor/
+
+echo "ls $PROJECT_PATH/magento/ \n"
+ls $PROJECT_PATH/magento/
+
+echo "ls $PROJECT_PATH/magento/vendor \n"
+ls $PROJECT_PATH/magento/vendor
+
+cp -a "$PROJECT_PATH/magento/." "$PROJECT_PATH" #TODO: fix MAGENTO_PATH resolution issue
 
 PWA_PATH="$PROJECT_PATH/pwa"
 if [ -n $INPUT_PWA_PATH ]
@@ -23,7 +32,7 @@ echo "project path is $PROJECT_PATH";
 
 which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
 eval $(ssh-agent -s)
-mkdir ~/.ssh/ && echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+mkdir -p ~/.ssh/ && echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
 ssh-add ~/.ssh/id_rsa
 echo "$SSH_CONFIG" > /etc/ssh/ssh_config && chmod 600 /etc/ssh/ssh_config
 
@@ -46,7 +55,7 @@ ARCHIVES="deployer/scripts/production"
 if [ -n "$ENV_VALUES" ]
 then
   echo "$ENV_VALUES" > $MAGENTO_PATH/app/etc/env.php
-  echo "$ENV_VALUES" > ./magento/app/etc/env.php
+  echo "$ENV_VALUES" > $PROJECT_PATH/magento/app/etc/env.php
   ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  production "mkdir -p $HOST_DEPLOY_PATH/shared/magento/app/etc/"
   scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  $MAGENTO_PATH/app/etc/env.php production:$HOST_DEPLOY_PATH/shared/magento/app/etc/
   echo "Magento env.php values set successfully."

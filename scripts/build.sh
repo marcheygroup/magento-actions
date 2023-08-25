@@ -88,10 +88,10 @@ then
     
     # since we are using custom directory, we need to copy build magento content to 'magento' folder
     echo "Copied required generated files"
-    cp -r "$MAGENTO_PATH/app" "magento" 
-    cp -r "$MAGENTO_PATH/pub/static" "magento/pub" 
-    cp -r "$MAGENTO_PATH/generated" "magento" 
-    cp -r "$MAGENTO_PATH/vendor" "magento" 
+    cp -r "$MAGENTO_PATH/app" "$PROJECT_PATH/magento" 
+    cp -r "$MAGENTO_PATH/pub/static" "$PROJECT_PATH/magento/pub" 
+    cp -r "$MAGENTO_PATH/generated" "$PROJECT_PATH/magento" 
+    cp -r "$MAGENTO_PATH/vendor" "$PROJECT_PATH/magento" 
 
     echo "Cleanup non essential files"
     rm -rf magento/dev/*

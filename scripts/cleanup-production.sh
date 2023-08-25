@@ -2,7 +2,7 @@
 
 which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
 eval $(ssh-agent -s)
-mkdir ~/.ssh/ && echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+mkdirv -p ~/.ssh/ && echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
 ssh-add ~/.ssh/id_rsa
 echo "$SSH_CONFIG" > /etc/ssh/ssh_config && chmod 600 /etc/ssh/ssh_config
 
@@ -12,14 +12,8 @@ set -e
 
 cd /opt/config/php-deployer
 
-DEFAULT_SELECTOR=production
-if [ -n "$SELECTOR" ]
-then
-  DEFAULT_SELECTOR=$SELECTOR
-fi
-
 # deploy bucket
-php7.4 ./vendor/bin/dep deploy:unlock $DEFAULT_SELECTOR \
+php7.4 ./vendor/bin/dep deploy:unlock production \
 -o bucket-commit=$BUCKET_COMMIT \
 -o host_bucket_path=$HOST_DEPLOY_PATH_BUCKET \
 -o deploy_keep_releases=$INPUT_KEEP_RELEASES \
