@@ -33,7 +33,7 @@ ARCHIVES="deployer/scripts/production"
 if [ -n "$ENV_VALUES" ]
 then
   echo "$ENV_VALUES" > magento/app/etc/env.php
-  scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  magento/app/etc/env.php staging:$HOST_DEPLOY_PATH/shared/magento/app/etc/
+  scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  magento/app/etc/env.php production:$HOST_DEPLOY_PATH/shared/magento/app/etc/
   echo "Magento env.php values set successfully."
 fi
 
@@ -122,5 +122,5 @@ ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  production "cd 
 if [ -n "$HOST_DEPLOY_PATH_RELEASES" ]
 then
   echo "cleaning up releases"
-  ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  production "cd $HOST_DEPLOY_PATH_RELEASES && /bin/bash $HOST_DEPLOY_PATH/deployer/scripts/staging/post_release_cleanup.sh $INPUT_KEEP_RELEASES"
+  ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  production "cd $HOST_DEPLOY_PATH_RELEASES && /bin/bash $HOST_DEPLOY_PATH/deployer/scripts/production/post_release_cleanup.sh $INPUT_KEEP_RELEASES"
 fi

@@ -240,7 +240,7 @@ For magento 2.3 and lower if  issues with the preceding sample
 - `SSH_PRIVATE_KEY` : `your ssh key`
 - `SSH_CONFIG` : [see more](https://github.com/marchey/magento-actions/blob/master/config/php-deployer/sshd_config_example)  adjust the values to match your server (Host must be staging or production)
      ```
-       Host staging  //this must be staging or production
+        Host staging  //this must be staging or production
         User magento 
         IdentityFile ~/.ssh/id_rsa 
         HostName staging.server
