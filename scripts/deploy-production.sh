@@ -45,8 +45,10 @@ ARCHIVES="deployer/scripts/production"
 
 if [ -n "$ENV_VALUES" ]
 then
-  echo "$ENV_VALUES" > magento/app/etc/env.php
-  scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  magento/app/etc/env.php production:$HOST_DEPLOY_PATH/shared/magento/app/etc/
+  echo "$ENV_VALUES" > $MAGENTO_PATH/app/etc/env.php
+  echo "$ENV_VALUES" > ./magento/app/etc/env.php
+  ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  production "mkdir -p $HOST_DEPLOY_PATH/shared/magento/app/etc/"
+  scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  $MAGENTO_PATH/app/etc/env.php production:$HOST_DEPLOY_PATH/shared/magento/app/etc/
   echo "Magento env.php values set successfully."
 fi
 
