@@ -12,7 +12,7 @@ then
 fi
 
 echo "ls $PROJECT_PATH/vendor/ \n"
-ls $PROJECT_PATH/vendor/
+ls $PROJECT_PATH/
 
 echo "ls $PROJECT_PATH/magento/ \n"
 ls $PROJECT_PATH/magento/
