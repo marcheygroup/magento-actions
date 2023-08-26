@@ -11,10 +11,6 @@ then
     MAGENTO_PATH="$PROJECT_PATH$INPUT_MAGENTO_PATH"
 fi
 
-ls /home/runner/work/api.supplyz.com/api.supplyz.com
-
-ls /home/runner/work/api.supplyz.com/api.supplyz.com/magento/vendor
-
 echo "ls $PROJECT_PATH/vendor/ \n"
 ls $PROJECT_PATH/vendor/
 
