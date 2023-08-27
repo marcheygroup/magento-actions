@@ -11,14 +11,9 @@ then
     MAGENTO_PATH="$PROJECT_PATH$INPUT_MAGENTO_PATH"
 fi
 
-echo "ls $PROJECT_PATH/vendor/ \n"
-ls $PROJECT_PATH/
+echo "Printing $PROJECT_PATH \n"
+ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
 
-echo "ls $PROJECT_PATH/magento/ \n"
-ls $PROJECT_PATH/magento/
-
-echo "ls $PROJECT_PATH/magento/vendor \n"
-ls $PROJECT_PATH/magento/vendor
 
 cp -a "$PROJECT_PATH/magento/." "$PROJECT_PATH" #TODO: fix MAGENTO_PATH resolution issue
 
