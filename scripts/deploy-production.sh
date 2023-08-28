@@ -13,7 +13,8 @@ fi
 
 # echo "Printing $PROJECT_PATH \n"
 # ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
-
+echo "$PROJECT_PATH/magento"
+echo $MAGENTO_PATH
 if [ "$PROJECT_PATH/magento" != "$MAGENTO_PATH" ]
 then
   echo "Copying files to MAGENTO_PATH: $MAGENTO_PATH \n"
