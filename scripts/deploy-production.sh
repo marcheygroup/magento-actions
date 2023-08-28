@@ -4,30 +4,6 @@ set -e
 
 PROJECT_PATH="$(pwd)"
 
-MAGENTO_PATH="$PROJECT_PATH"
-
-if [ -d "$PROJECT_PATH$INPUT_MAGENTO_PATH" ]
-then
-    MAGENTO_PATH="$PROJECT_PATH$INPUT_MAGENTO_PATH"
-fi
-
-# echo "Printing $PROJECT_PATH \n"
-# ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
-ls $PROJECT_PATH/magento
-ls $PROJECT_PATH/magento/magento
-
-if [ "$PROJECT_PATH/magento" != "$MAGENTO_PATH" ]
-then
-  echo "Copying files to MAGENTO_PATH: $MAGENTO_PATH \n"
-  cp -a "$PROJECT_PATH/magento" "$MAGENTO_PATH" 
-fi
-
-PWA_PATH="$PROJECT_PATH/pwa"
-if [ -n $INPUT_PWA_PATH ]
-then
-  PWA_PATH="$PROJECT_PATH$INPUT_PWA_PATH"
-fi
-
 echo "project path is $PROJECT_PATH";
 
 which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
@@ -36,11 +12,7 @@ mkdir -p ~/.ssh/ && echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/
 ssh-add ~/.ssh/id_rsa
 echo "$SSH_CONFIG" > /etc/ssh/ssh_config && chmod 600 /etc/ssh/ssh_config
 
-
 echo "Create artifact and send to server"
-
-cd $PROJECT_PATH
-
 
 echo "Deploying to production server";
 
@@ -54,14 +26,11 @@ ARCHIVES="deployer/scripts/production"
 
 if [ -n "$ENV_VALUES" ]
 then
-  touch $MAGENTO_PATH/app/etc/env.php
-  echo "$ENV_VALUES" > $MAGENTO_PATH/app/etc/env.php
-
   touch $PROJECT_PATH/magento/app/etc/env.php
   echo "$ENV_VALUES" > $PROJECT_PATH/magento/app/etc/env.php
   
   ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  production "mkdir -p $HOST_DEPLOY_PATH/shared/magento/app/etc/"
-  scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  $MAGENTO_PATH/app/etc/env.php production:$HOST_DEPLOY_PATH/shared/magento/app/etc/
+  scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  $PROJECT_PATH/magento/app/etc/env.php production:$HOST_DEPLOY_PATH/shared/magento/app/etc/
   echo "Magento env.php values set successfully."
 fi
 
@@ -89,16 +58,7 @@ php7.4 ./vendor/bin/dep deploy-bucket production \
 -o write_use_sudo=$WRITE_USE_SUDO
 
 # Run pre-release script in order to setup the server before magento deploy
-MAGENTO_PATH="$PROJECT_PATH"
-
-if [ -d "$PROJECT_PATH$INPUT_MAGENTO_PATH" ]
-then
-    MAGENTO_PATH="$PROJECT_PATH$INPUT_MAGENTO_PATH"
-fi
-
-echo "MAGENTO_PATH set as $MAGENTO_PATH"
-
-if [ -d "$MAGENTO_PATH" ]
+if [ -d "$PROJECT_PATH/magento" ]
 then
   ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  production "cd $HOST_DEPLOY_PATH/release/magento/ && /bin/bash $HOST_DEPLOY_PATH/deployer/scripts/production/release_setup.sh"
 fi
@@ -121,20 +81,13 @@ php7.4 ./vendor/bin/dep $DEFAULT_DEPLOYER production \
 
 echo "running magento and/or pwa deployer"
 
-if [ -d "$MAGENTO_PATH" ]
+if [ -d "$PROJECT_PATH/magento" ]
 then
   ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  production "cd $HOST_DEPLOY_PATH/current/magento/ && /bin/bash $HOST_DEPLOY_PATH/deployer/scripts/production/post_release_setup.sh"
 fi
 
 # Run pwa-studio post release script if the directory exists
-PWA_PATH=$PROJECT_PATH
-
-if [ -n $INPUT_PWA_PATH ]
-then
-  PWA_PATH="$PROJECT_PATH$INPUT_PWA_PATH"
-fi
-
-if [ -d "$PWA_PATH" ]
+if [ -d "$PROJECT_PATH/pwa-studio" ]
 then
  ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  production "cd $HOST_DEPLOY_PATH/current/pwa-studio/ && /bin/bash $HOST_DEPLOY_PATH/deployer/scripts/production/post_release_setup_pwa_studio.sh"
 fi
