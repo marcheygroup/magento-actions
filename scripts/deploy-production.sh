@@ -14,8 +14,11 @@ fi
 # echo "Printing $PROJECT_PATH \n"
 # ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
 
-# echo "Copying files to MAGENTO_PATH: $MAGENTO_PATH \n"
-cp -a "$PROJECT_PATH/magento" "$MAGENTO_PATH" 
+if [ "$PROJECT_PATH/magento" != "$MAGENTO_PATH" ]
+then
+  echo "Copying files to MAGENTO_PATH: $MAGENTO_PATH \n"
+  cp -a "$PROJECT_PATH/magento" "$MAGENTO_PATH" 
+fi
 
 PWA_PATH="$PROJECT_PATH/pwa"
 if [ -n $INPUT_PWA_PATH ]
