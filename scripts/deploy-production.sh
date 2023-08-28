@@ -11,11 +11,11 @@ then
     MAGENTO_PATH="$PROJECT_PATH$INPUT_MAGENTO_PATH"
 fi
 
-echo "Printing $PROJECT_PATH \n"
-ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
+# echo "Printing $PROJECT_PATH \n"
+# ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
 
-
-cp -a "$PROJECT_PATH/magento/." "$PROJECT_PATH" #TODO: fix MAGENTO_PATH resolution issue
+# echo "Copying files to MAGENTO_PATH: $MAGENTO_PATH \n"
+cp -a "$PROJECT_PATH/magento" "$MAGENTO_PATH" 
 
 PWA_PATH="$PROJECT_PATH/pwa"
 if [ -n $INPUT_PWA_PATH ]
@@ -49,8 +49,12 @@ ARCHIVES="deployer/scripts/production"
 
 if [ -n "$ENV_VALUES" ]
 then
+  touch $MAGENTO_PATH/app/etc/env.php
   echo "$ENV_VALUES" > $MAGENTO_PATH/app/etc/env.php
+
+  touch $PROJECT_PATH/magento/app/etc/env.php
   echo "$ENV_VALUES" > $PROJECT_PATH/magento/app/etc/env.php
+  
   ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  production "mkdir -p $HOST_DEPLOY_PATH/shared/magento/app/etc/"
   scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  $MAGENTO_PATH/app/etc/env.php production:$HOST_DEPLOY_PATH/shared/magento/app/etc/
   echo "Magento env.php values set successfully."
