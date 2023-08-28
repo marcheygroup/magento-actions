@@ -13,6 +13,8 @@ fi
 
 # echo "Printing $PROJECT_PATH \n"
 # ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
+ls $PROJECT_PATH/magento
+ls $PROJECT_PATH/magento/magento
 
 if [ "$PROJECT_PATH/magento" != "$MAGENTO_PATH" ]
 then
