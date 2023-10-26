@@ -41,6 +41,7 @@ set(
         '{{magento_root}}/var/session',
         '{{magento_root}}/var/importexport',
         '{{magento_root}}/var/backups',
+        '{{magento_root}}/var/upload',
         '{{magento_root}}/var/tmp',
         '{{magento_root}}/pub/sitemap',
         '{{magento_root}}/pub/static/_cache'
