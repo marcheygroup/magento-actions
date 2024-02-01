@@ -8,7 +8,12 @@ echo "cleaning up buckets"
 
 KEEP_RELEASE_NR="NR>$1";
 
+echo $(ls -t | awk $KEEP_RELEASE_NR)
+echo $(pwd)
+
 rm -rf `ls -t | awk $KEEP_RELEASE_NR`
+
+echo $(ls)
 
 if service --status-all | grep -Fq 'php8.1-fpm'; then    
   sudo service php8.1-fpm restart    
