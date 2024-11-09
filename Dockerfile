@@ -16,9 +16,9 @@ RUN apt-get -y update \
 
 
 RUN apt-get -yq install \
-    python-pip\
+    python3-pip\
     gcc\
-    python-dev
+    python3-dev
 
 RUN wget -O "/etc/apt/trusted.gpg.d/php.gpg" "https://packages.sury.org/php/apt.gpg" \
     && sh -c 'echo "deb https://packages.sury.org/php/ bookworm main" > /etc/apt/sources.list.d/php.list'
