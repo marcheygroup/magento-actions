@@ -19,7 +19,7 @@ then
    cd "$MAGENTO_PATH"
   
    if [ -n "$COMPOSER_TOKEN" ]; then
-    composer -q config -g github-oauth.github.com "$COMPOSER_TOKEN"
+    /usr/local/bin/composer -q config -g github-oauth.github.com "$COMPOSER_TOKEN"
    fi
   
    /usr/local/bin/composer install --dry-run --no-dev --no-progress &> /dev/null
