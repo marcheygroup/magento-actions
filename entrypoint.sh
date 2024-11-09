@@ -11,6 +11,7 @@ then
 else
   echo "Forcing php to match specified input argument"
   update-alternatives --set php /usr/bin/php${INPUT_PHP}
+  t
 fi
 
 echo "Input search engine specifications"
