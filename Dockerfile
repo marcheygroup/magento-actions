@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:bookworm
 
 LABEL org.opencontainers.image.source="https://github.com/MAD-I-T/magento-actions"
 
@@ -21,7 +21,7 @@ RUN apt-get -yq install \
     python-dev
 
 RUN wget -O "/etc/apt/trusted.gpg.d/php.gpg" "https://packages.sury.org/php/apt.gpg" \
-    && sh -c 'echo "deb https://packages.sury.org/php/ buster main" > /etc/apt/sources.list.d/php.list'
+    && sh -c 'echo "deb https://packages.sury.org/php/ bookworm main" > /etc/apt/sources.list.d/php.list'
 
 RUN apt-get install -f libgd3 -y
 
