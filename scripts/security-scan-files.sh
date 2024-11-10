@@ -13,6 +13,8 @@ fi
 
 cd "$MAGENTO_PATH"
 
+if [ ! -d "$MAGENTO_PATH/vendor" ]
+then
 /usr/local/bin/composer install --dry-run --prefer-dist --no-progress &> /dev/null
 
 COMPOSER_COMPATIBILITY=$?
@@ -30,19 +32,9 @@ else
   php7.2 /usr/local/bin/composer self-update --1
 	/usr/local/bin/composer install --prefer-dist --no-progress
 fi
+fi
 
-
-git clone https://github.com/seyuf/magento-malware-scanner
-
-cd magento-malware-scanner/
-
-pip install --upgrade yara-python psutil requests>=0.8.2
-
-python setup.py install --record $PROJECT_PATH/files.txt
-
-cd .. && rm -r magento-malware-scanner/
-
-mwscan --ruleset madit  .
+curl "https://ecomscan.com" | sh
 
 
 
