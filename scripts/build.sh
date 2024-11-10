@@ -44,7 +44,7 @@ then
 
     #mysqladmin -h mysql -u root -pmagento status
     ## fix magento error: connection default is not defined
-    echo "<?php  return ['install' => [ 'date' => 'Thu, 07 Nov 2024 05:48:29 +0000' ], 'db' => [ 'table_prefix' => '', 'connection' => [ 'default' => [ 'host' => 'mysql', 'dbname' => 'magento', 'username' => 'root', 'password' => 'magento', 'model' => 'mysql4', 'engine' => 'innodb', 'initStatements' => 'SET NAMES utf8;', 'active' => '1' ] ]]];" > app/etc/env.php
+    ## echo "<?php  return ['install' => [ 'date' => 'Thu, 07 Nov 2024 05:48:29 +0000' ], 'db' => [ 'table_prefix' => '', 'connection' => [ 'default' => [ 'host' => 'mysql', 'dbname' => 'magento', 'username' => 'root', 'password' => 'magento', 'model' => 'mysql4', 'engine' => 'innodb', 'initStatements' => 'SET NAMES utf8;', 'active' => '1' ] ]]];" > app/etc/env.php
     ## end fix ##
 
     if [ -n "$INPUT_DISABLE_MODULES"  ]
