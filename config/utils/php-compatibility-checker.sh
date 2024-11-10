@@ -21,7 +21,7 @@ fi
 set -e
 echo "Current magento version is $MAGE_VERSION"
 pwd
-ls -lath magento/composer.json
+ls -lath $MAGENTO_PATH/composer.json
 
 
 majorVersion=${MAGE_VERSION:2:1}

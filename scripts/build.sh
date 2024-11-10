@@ -20,6 +20,7 @@ then
   
    if [ -n "$COMPOSER_TOKEN" ]; then
     /usr/local/bin/composer -q config -g github-oauth.github.com "$COMPOSER_TOKEN"
+    echo "Composer global auth set with GitHub token."
    fi
   
    /usr/local/bin/composer install --dry-run --no-dev --no-progress &> /dev/null
@@ -51,9 +52,15 @@ then
       echo "These modules will be discarded during install process $INPUT_DISABLE_MODULES"
       [ -f app/etc/config.php ] && cp app/etc/config.php app/etc/config.php.orig
     fi
-    
+
     bash /opt/config/utils/pagebuilder-compatibility-checker.sh
     bash /opt/config/utils/common-magento-installer.sh
+
+    ## apply patches
+    if [ $INPUT_APPLY_PATCHES = 1 ]
+    then
+      bash /opt/config/utils/apply-composer-patches.sh
+    fi
 
     ## Build static contents
     bash /opt/config/utils/custom-theme-builder.sh
@@ -62,23 +69,30 @@ then
     then
       ## the switch to production will build static content for all languages declared in config.php
       bin/magento deploy:mode:set production
+      composer dump-autoload -o
     else
       bin/magento setup:di:compile
       bin/magento deploy:mode:set --skip-compilation production
       # deploy static build for different locales
       export IFS=","
-      magento_themes=${INPUT_THEMES:+${INPUT_THEMES//,/' '}""}
-      magento_themes=${INPUT_THEMES:+"-t "${magento_themes// /' -t '}" -t Magento/backend"}
+      magento_themes=${INPUT_THEMES:+${INPUT_THEMES//' '/,}",Magento/backend"}
+      magento_themes_array=($magento_themes)
       languages="$INPUT_LANGS"
       if [ -n "$languages"  ]
       then
         for locale in $languages; do
-          echo "bin/magento setup:static-content:deploy $magento_themes $locale"
-          bin/magento setup:static-content:deploy $magento_themes $locale
+          for theme in "${magento_themes_array[@]}" 
+          do
+            echo "bin/magento setup:static-content:deploy -t $theme $locale"
+            bin/magento setup:static-content:deploy -t $theme $locale
+	  done
         done
       else
-          echo "bin/magento setup:static-content:deploy $magento_themes"
-          bin/magento setup:static-content:deploy $magento_themes
+          for theme in "${magento_themes_array[@]}" 
+          do
+            echo "bin/magento setup:static-content:deploy $theme"
+            bin/magento setup:static-content:deploy $theme
+	  done
       fi
       composer dump-autoload -o
     fi
