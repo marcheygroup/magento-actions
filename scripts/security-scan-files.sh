@@ -34,7 +34,8 @@ else
 fi
 fi
 
-curl "https://ecomscan.com" | sh
-
-
+wget https://ecomscan.com/downloads/linux-amd64/ecomscan
+mv ./ecomscan /usr/local/bin/ecomscan
+chmod 755 /usr/local/bin/ecomscan
+/usr/local/bin/ecomscan "$MAGENTO_PATH"
 
